@@ -1,0 +1,3 @@
+rootProject.name='AKPermission'
+include ':app'
+include ':akpermission'

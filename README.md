@@ -3,7 +3,7 @@
 [![](https://jitpack.io/v/li-yu/AKPermission.svg)](https://jitpack.io/#li-yu/AKPermission)
 
 ![](showcode.png)
-A lightweight Android Runtime Permissions handler in Kotlin
+A lightweight Android Runtime Permissions handler in Kotlin.
 
 ## Usage
 
@@ -30,9 +30,9 @@ Step 3. Let the code fly:
 
 You can use `callWithPermissions(...)` in Activity or Fragment just like below:
 
-```
+```kotlin
 callWithPermissions(Manifest.permission.RECORD_AUDIO,
-    Manifest.permission..WRITE_EXTERNAL_STORAGE) {
+    Manifest.permission.WRITE_EXTERNAL_STORAGE) {
     onGranted {
         // 授权成功
     }

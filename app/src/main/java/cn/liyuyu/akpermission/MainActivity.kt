@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         btn2.setOnClickListener {
             takePhoto()
         }
-
     }
 
     private fun recordAudio() = callWithPermissions(Manifest.permission.RECORD_AUDIO) {

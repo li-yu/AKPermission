@@ -59,7 +59,7 @@ private fun getPermissionFragment(fragmentManager: FragmentManager): PermissionF
     return fragment as PermissionFragment
 }
 
-private fun View.getHostActivity(): AppCompatActivity {
+fun View.getHostActivity(): AppCompatActivity {
     var tempContext = context
     while (tempContext is ContextWrapper) {
         if (tempContext is AppCompatActivity) {
@@ -67,10 +67,10 @@ private fun View.getHostActivity(): AppCompatActivity {
         }
         tempContext = tempContext.baseContext
     }
-    throw IllegalStateException("Can not get AppCompatActivity from $this, you should use callWithPermissions(...) by context based on AppCompatActivity.")
+    throw IllegalStateException("Can not get AppCompatActivity from $this, you should use the context based on AppCompatActivity.")
 }
 
-private fun Context.getActivity(): AppCompatActivity {
+fun Context.getActivity(): AppCompatActivity {
     var tempContext = this
     while (tempContext is ContextWrapper) {
         if (tempContext is AppCompatActivity) {
@@ -78,5 +78,5 @@ private fun Context.getActivity(): AppCompatActivity {
         }
         tempContext = tempContext.baseContext
     }
-    throw IllegalStateException("Can not get AppCompatActivity from $this, you should use callWithPermissions(...) by context based on AppCompatActivity.")
+    throw IllegalStateException("Can not get AppCompatActivity from $this, you should use the context based on AppCompatActivity.")
 }

@@ -9,7 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import cn.liyuyu.akpermission.coroutines.callWithPermissionsResult
 import kotlinx.android.synthetic.main.fragment_test.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 /**
@@ -27,6 +32,9 @@ class TestFragment : Fragment() {
         }
         fragmentContent.btn4.setOnClickListener {
             getLocation()
+        }
+        fragmentContent.btn5.setOnClickListener {
+            getLocationInBackground()
         }
         return fragmentContent
     }
@@ -81,6 +89,24 @@ class TestFragment : Fragment() {
                 .setNegativeButton("不给", null)
                 .create()
                 .show()
+        }
+    }
+
+    private fun getLocationInBackground() {
+        GlobalScope.launch {
+            withContext(Dispatchers.Default) {
+                val result = callWithPermissionsResult(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                if (result.isAllGranted) {
+                    // ...
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                Log.d(LOG_TAG, result.toString())
+            }
         }
     }
 }

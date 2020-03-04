@@ -5,41 +5,56 @@ package cn.liyuyu.akpermission
  */
 class PermissionCallback {
 
-    private var onGranted: () -> Unit = {}
-    private var onDenied: (permissions: List<String>) -> Unit = {}
-    private var onShowRationale: (permissionRequest: PermissionRationale) -> Unit = {}
-    private var onNeverAskAgain: (permissions: List<String>) -> Unit = {}
+    private var onGranted: (() -> Unit)? = null
+    private var onDenied: ((List<String>) -> Unit)? = null
+    private var onShowRationale: ((PermissionRationale) -> Unit)? = null
+    private var onNeverAskAgain: ((List<String>) -> Unit)? = null
+    private var onRequestCompleted: ((PermissionsResult) -> Unit)? = null
+    private lateinit var result: PermissionsResult
 
-    fun onGranted(func: () -> Unit) {
-        onGranted = func
+    fun onGranted(block: () -> Unit) {
+        onGranted = block
     }
 
-    fun onDenied(func: (permissions: List<String>) -> Unit) {
-        onDenied = func
+    fun onDenied(block: (List<String>) -> Unit) {
+        onDenied = block
     }
 
-    fun onShowRationale(func: (permissionRequest: PermissionRationale) -> Unit) {
-        onShowRationale = func
+    fun onShowRationale(block: (PermissionRationale) -> Unit) {
+        onShowRationale = block
     }
 
-    fun onNeverAskAgain(func: (permissions: List<String>) -> Unit) {
-        onNeverAskAgain = func
+    fun onNeverAskAgain(block: (List<String>) -> Unit) {
+        onNeverAskAgain = block
+    }
+
+    fun onRequestCompleted(block: (PermissionsResult) -> Unit) {
+        onRequestCompleted = block
+        result = PermissionsResult()
     }
 
     internal fun onGranted() {
-        onGranted.invoke()
+        onGranted?.invoke()
+        result.isAllGranted = true
     }
 
     internal fun onDenied(permissions: List<String>) {
-        onDenied.invoke(permissions)
+        onDenied?.invoke(permissions)
+        result.denied = permissions
     }
 
-    internal fun onShowRationale(permissionRequest: PermissionRationale) {
-        onShowRationale.invoke(permissionRequest)
+    internal fun onShowRationale(permissionRationale: PermissionRationale) {
+        onShowRationale?.invoke(permissionRationale)
+        result.rationale = permissionRationale
     }
 
     internal fun onNeverAskAgain(permissions: List<String>) {
-        onNeverAskAgain.invoke(permissions)
+        onNeverAskAgain?.invoke(permissions)
+        result.neverAskAgain = permissions
+    }
+
+    internal fun onRequestCompleted() {
+        onRequestCompleted?.invoke(result)
     }
 
 }

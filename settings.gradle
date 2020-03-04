@@ -1,3 +1,4 @@
 rootProject.name='AKPermission'
 include ':app'
 include ':akpermission'
+include ':akpermission-coroutines'

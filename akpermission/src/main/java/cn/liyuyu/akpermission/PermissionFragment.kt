@@ -34,6 +34,7 @@ class PermissionFragment : Fragment() {
             requestPermissions(needPermissions.toTypedArray(), REQUEST_CODE)
         } else {
             permissionCallback?.onGranted()
+            permissionCallback?.onRequestCompleted()
         }
     }
 
@@ -82,6 +83,7 @@ class PermissionFragment : Fragment() {
                 permissionCallback?.onDenied(deniedPermissions)
             }
         }
+        permissionCallback?.onRequestCompleted()
     }
 
 }

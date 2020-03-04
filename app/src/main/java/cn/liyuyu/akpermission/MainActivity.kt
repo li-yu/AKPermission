@@ -6,7 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import cn.liyuyu.akpermission.coroutines.callWithPermissionsResult
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 const val LOG_TAG = "AK_MainActivity"
 
@@ -22,6 +27,23 @@ class MainActivity : AppCompatActivity() {
 
         btn2.setOnClickListener {
             takePhoto()
+        }
+        btn3.setOnClickListener {
+            downloadFile()
+        }
+    }
+
+    private fun downloadFile() {
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                var result = callWithPermissionsResult(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                Log.d(LOG_TAG, result.toString())
+                if (result.isAllGranted) {
+                    // ...
+                }
+            }
         }
     }
 

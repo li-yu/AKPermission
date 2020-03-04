@@ -25,6 +25,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn2" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Request in coroutines"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn1" />
+
     <fragment
         android:id="@+id/testFragment"
         android:name="cn.liyuyu.akpermission.TestFragment"
@@ -32,6 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn1" />
+        app:layout_constraintTop_toBottomOf="@id/btn3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

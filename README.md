@@ -22,7 +22,7 @@ Step 2. Add the dependency:
 
 ```
 dependencies {
-	  implementation 'com.github.li-yu:AKPermission:1.0'
+	implementation 'com.github.li-yu.AKPermission:akpermission:1.1'
 }
 ```
 
@@ -60,7 +60,17 @@ callWithPermissions(Manifest.permission.RECORD_AUDIO,
 
 ### Kotlin Coroutine
 
-Use `callWithPermissionsResult(...)` in coroutines, for example:
+Add the dependency:
+
+[![](https://jitpack.io/v/li-yu/AKPermission.svg)](https://jitpack.io/#li-yu/AKPermission)
+
+```
+dependencies {
+	implementation 'com.github.li-yu.AKPermission:akpermission-coroutines:1.1'
+}
+```
+
+Then use `callWithPermissionsResult(...)` in coroutines, for example:
 
 ```kotlin
 suspend fun downloadFile() = withContext(Dispatchers.IO) {

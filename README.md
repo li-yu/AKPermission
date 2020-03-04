@@ -3,7 +3,7 @@
 [![](https://jitpack.io/v/li-yu/AKPermission.svg)](https://jitpack.io/#li-yu/AKPermission)
 
 ![](showcode.png)
-A lightweight Android Runtime Permissions handler in Kotlin.
+A lightweight Android Runtime Permissions handler in Kotlin, also with coroutines.
 
 ## Usage
 
@@ -26,7 +26,7 @@ dependencies {
 }
 ```
 
-Step 3. Let the code fly:
+Step 3. Coding:
 
 You can use `callWithPermissions(...)` in **Activity**, **Fragment**, **View** and **Context**(based on AppCompatActivity) just like below:
 

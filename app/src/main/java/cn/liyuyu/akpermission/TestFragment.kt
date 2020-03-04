@@ -101,7 +101,7 @@ class TestFragment : Fragment() {
                 )
                 if (result.isAllGranted) {
                     // ...
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show()
                     }
                 }

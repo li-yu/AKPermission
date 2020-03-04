@@ -28,32 +28,45 @@ dependencies {
 
 Step 3. Let the code fly:
 
-You can use `callWithPermissions(...)` in Activity or Fragment just like below:
+You can use `callWithPermissions(...)` in **Activity**, **Fragment**, **View** and **Context**(based on AppCompatActivity) just like below:
 
 ```kotlin
 callWithPermissions(Manifest.permission.RECORD_AUDIO,
     Manifest.permission.WRITE_EXTERNAL_STORAGE) {
     onGranted {
-        // 授权成功
+        // all granted
     }
     onDenied {
-        // 拒绝授权，包含 NeverAskAgain 和 ShowRationale 的情况
+        // denied, contains NeverAskAgain and ShowRationale permissions
     }
     onNeverAskAgain {
-        // 拒绝授权并勾选不再询问
+        // denied, and user checked NeverAskAgain button
     }
     onShowRationale {
-        // 拒绝授权，但没有勾选不再询问
-        // 此时我们需要对用户解释为什么需要这些权限
+        // denied, but not checked NeverAskAgain button
+        // we need to explain to the user why these permissions are needed
         AlertDialog.Builder(this@MainActivity)
-            .setMessage("麻烦给个权限呗")
-            .setTitle("提醒")
+            .setMessage("麻烦给个权限呗~")
+            .setTitle("小提醒")
             .setPositiveButton("给") { _, _ ->
-                it.retry() // 重新发起授权请求
+                it.retry() // request again
             }
             .setNegativeButton("不给", null)
             .create()
             .show()
+    }
+}
+```
+
+### Kotlin Coroutine
+
+Use `callWithPermissionsResult(...)` in coroutines, for example:
+
+```kotlin
+suspend fun downloadFile() = withContext(Dispatchers.IO) {
+    val result = callWithPermissionsResult(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    if (result.isAllGranted) {
+        startDownload()
     }
 }
 ```

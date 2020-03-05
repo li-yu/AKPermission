@@ -10,7 +10,7 @@ class PermissionCallback {
     private var onShowRationale: ((PermissionRationale) -> Unit)? = null
     private var onNeverAskAgain: ((List<String>) -> Unit)? = null
     private var onRequestCompleted: ((PermissionsResult) -> Unit)? = null
-    private lateinit var result: PermissionsResult
+    private var result: PermissionsResult? = null
 
     fun onGranted(block: () -> Unit) {
         onGranted = block
@@ -35,26 +35,26 @@ class PermissionCallback {
 
     internal fun onGranted() {
         onGranted?.invoke()
-        result.isAllGranted = true
+        result?.isAllGranted = true
     }
 
     internal fun onDenied(permissions: List<String>) {
         onDenied?.invoke(permissions)
-        result.denied = permissions
+        result?.denied = permissions
     }
 
     internal fun onShowRationale(permissionRationale: PermissionRationale) {
         onShowRationale?.invoke(permissionRationale)
-        result.rationale = permissionRationale
+        result?.rationale = permissionRationale
     }
 
     internal fun onNeverAskAgain(permissions: List<String>) {
         onNeverAskAgain?.invoke(permissions)
-        result.neverAskAgain = permissions
+        result?.neverAskAgain = permissions
     }
 
     internal fun onRequestCompleted() {
-        onRequestCompleted?.invoke(result)
+        onRequestCompleted?.invoke(result!!)
     }
 
 }

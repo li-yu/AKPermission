@@ -22,7 +22,7 @@ Step 2. Add the dependency:
 
 ```
 dependencies {
-	implementation 'com.github.li-yu.AKPermission:akpermission:1.1'
+	implementation 'com.github.li-yu.AKPermission:akpermission:1.1.1'
 }
 ```
 
@@ -66,7 +66,7 @@ Add the dependency:
 
 ```
 dependencies {
-	implementation 'com.github.li-yu.AKPermission:akpermission-coroutines:1.1'
+	implementation 'com.github.li-yu.AKPermission:akpermission-coroutines:1.1.1'
 }
 ```
 

@@ -4,10 +4,10 @@ import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import cn.liyuyu.akpermission.coroutines.callWithPermissionsResult
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,15 +20,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        btn1.setOnClickListener {
+        findViewById<Button>(R.id.btn1).setOnClickListener {
             recordAudio()
         }
 
-        btn2.setOnClickListener {
+        findViewById<Button>(R.id.btn2).setOnClickListener {
             takePhoto()
         }
-        btn3.setOnClickListener {
+        findViewById<Button>(R.id.btn3).setOnClickListener {
             downloadFile()
         }
     }
@@ -54,19 +53,21 @@ class MainActivity : AppCompatActivity() {
         }
         onDenied {
             Log.d(LOG_TAG, "onDenied $it")
+            Toast.makeText(this@MainActivity, "onDenied $it", Toast.LENGTH_SHORT).show()
         }
         onNeverAskAgain {
             Log.d(LOG_TAG, "onNeverAskAgain $it")
+            Toast.makeText(this@MainActivity, "onNeverAskAgain $it", Toast.LENGTH_SHORT).show()
         }
         onShowRationale {
             Log.d(LOG_TAG, "onShowRationale ${it.permissions}")
             AlertDialog.Builder(this@MainActivity)
-                .setMessage("麻烦给个权限呗")
-                .setTitle("提醒")
-                .setPositiveButton("给") { _, _ ->
+                .setMessage("Record Audio needs this permissions")
+                .setTitle("Hi")
+                .setPositiveButton("Yes") { _, _ ->
                     it.retry()
                 }
-                .setNegativeButton("不给", null)
+                .setNegativeButton("No", null)
                 .create()
                 .show()
         }
@@ -82,19 +83,21 @@ class MainActivity : AppCompatActivity() {
         }
         onDenied {
             Log.d(LOG_TAG, "onDenied $it")
+            Toast.makeText(this@MainActivity, "onDenied $it", Toast.LENGTH_SHORT).show()
         }
         onNeverAskAgain {
             Log.d(LOG_TAG, "onNeverAskAgain $it")
+            Toast.makeText(this@MainActivity, "onNeverAskAgain $it", Toast.LENGTH_SHORT).show()
         }
         onShowRationale {
             Log.d(LOG_TAG, "onShowRationale ${it.permissions}")
             AlertDialog.Builder(this@MainActivity)
-                .setMessage("麻烦给个权限呗")
-                .setTitle("提醒")
-                .setPositiveButton("给") { _, _ ->
+                .setMessage("Take photo needs this permissions")
+                .setTitle("Em...")
+                .setPositiveButton("Yes") { _, _ ->
                     it.retry()
                 }
-                .setNegativeButton("不给", null)
+                .setNegativeButton("No", null)
                 .create()
                 .show()
         }

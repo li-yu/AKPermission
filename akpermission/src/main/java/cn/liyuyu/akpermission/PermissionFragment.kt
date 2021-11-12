@@ -2,21 +2,61 @@ package cn.liyuyu.akpermission
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 /**
  * Created by liyu on 2020/2/27 13:39.
  */
-const val REQUEST_CODE = 2140
-
 class PermissionFragment : Fragment() {
 
     private var permissionCallback: PermissionCallback? = null
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
+        requestPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+                var allGranted = true
+                val neverAskAgainPermissions = mutableListOf<String>()
+                val deniedPermissions = mutableListOf<String>()
+                val showRationalePermissions = mutableListOf<String>()
+
+                result.forEach {
+                    if (!it.value) {
+                        allGranted = false
+                        if (!shouldShowRequestPermissionRationale(it.key)) {
+                            neverAskAgainPermissions.add(it.key)
+                        } else {
+                            showRationalePermissions.add(it.key)
+                        }
+                        deniedPermissions.add(it.key)
+                    }
+                }
+                if (allGranted) {
+                    permissionCallback?.onGranted()
+                } else {
+                    if (showRationalePermissions.isNotEmpty()) {
+                        permissionCallback?.onShowRationale(
+                            PermissionRationale(
+                                this,
+                                showRationalePermissions, permissionCallback
+                            )
+                        )
+                    }
+
+                    if (neverAskAgainPermissions.isNotEmpty()) {
+                        permissionCallback?.onNeverAskAgain(neverAskAgainPermissions)
+                    }
+
+                    if (deniedPermissions.isNotEmpty()) {
+                        permissionCallback?.onDenied(deniedPermissions)
+                    }
+                }
+                permissionCallback?.onRequestCompleted()
+            }
     }
 
     fun requestPermissions(
@@ -26,66 +66,22 @@ class PermissionFragment : Fragment() {
         permissionCallback = PermissionCallback().apply { callback() }
         val needPermissions = permissions.filter {
             ContextCompat.checkSelfPermission(
-                this.context!!,
+                this.requireContext(),
                 it
             ) == PackageManager.PERMISSION_DENIED
         }
         if (needPermissions.isNotEmpty()) {
-            requestPermissions(needPermissions.toTypedArray(), REQUEST_CODE)
+            requestPermissionLauncher.launch(needPermissions.toTypedArray())
         } else {
             permissionCallback?.onGranted()
             permissionCallback?.onRequestCompleted()
         }
     }
 
-    fun retry(permissions: Array<out String>, callback: PermissionCallback?) {
+    fun retry(permissions: Array<String>, callback: PermissionCallback?) {
         permissionCallback = callback
-        requestPermissions(permissions, REQUEST_CODE)
+        requestPermissionLauncher.launch(permissions)
     }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        var allGranted = true
-        val neverAskAgainPermissions = mutableListOf<String>()
-        val deniedPermissions = mutableListOf<String>()
-        val showRationalePermissions = mutableListOf<String>()
-        permissions.forEachIndexed { index, permission ->
-            if (grantResults[index] == PackageManager.PERMISSION_DENIED) {
-                allGranted = false
-                if (!shouldShowRequestPermissionRationale(permission)) {
-                    neverAskAgainPermissions.add(permission)
-                } else {
-                    showRationalePermissions.add(permission)
-                }
-                deniedPermissions.add(permission)
-            }
-        }
-        if (allGranted) {
-            permissionCallback?.onGranted()
-        } else {
-            if (showRationalePermissions.isNotEmpty()) {
-                permissionCallback?.onShowRationale(
-                    PermissionRationale(
-                        this,
-                        showRationalePermissions, permissionCallback
-                    )
-                )
-            }
-
-            if (neverAskAgainPermissions.isNotEmpty()) {
-                permissionCallback?.onNeverAskAgain(neverAskAgainPermissions)
-            }
-
-            if (deniedPermissions.isNotEmpty()) {
-                permissionCallback?.onDenied(deniedPermissions)
-            }
-        }
-        permissionCallback?.onRequestCompleted()
-    }
-
 }
 
 

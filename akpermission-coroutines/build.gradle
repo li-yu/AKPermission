@@ -48,7 +48,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.li-yu'
                 artifactId = 'akpermission-coroutines'
-                version = '1.0'
+                version = '1.2.0'
             }
         }
     }

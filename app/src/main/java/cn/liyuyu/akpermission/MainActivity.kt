@@ -1,4 +1,4 @@
-package cn.liyuyu.akpermission
+package cn.liyuyu.akpermission.demo
 
 import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import cn.liyuyu.akpermission.callWithPermissions
 import cn.liyuyu.akpermission.coroutines.callWithPermissionsResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

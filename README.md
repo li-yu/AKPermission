@@ -22,7 +22,7 @@ Step 2. Add the dependency:
 
 ```
 dependencies {
-	implementation 'com.github.li-yu.AKPermission:akpermission:1.1.1'
+	implementation 'com.github.li-yu:AKPermission:1.2.2'
 }
 ```
 
@@ -46,31 +46,21 @@ callWithPermissions(Manifest.permission.RECORD_AUDIO,
         // denied, but not checked NeverAskAgain button
         // we need to explain to the user why these permissions are needed
         AlertDialog.Builder(this@MainActivity)
-            .setMessage("麻烦给个权限呗~")
-            .setTitle("小提醒")
-            .setPositiveButton("给") { _, _ ->
-                it.retry() // request again
-            }
-            .setNegativeButton("不给", null)
-            .create()
-            .show()
+			.setMessage("Record Audio needs this permissions")
+			.setTitle("Hi")
+			.setPositiveButton("Yes") { _, _ ->
+				it.retry()
+			}
+			.setNegativeButton("No", null)
+			.create()
+			.show()
     }
 }
 ```
 
 ### Kotlin Coroutine
 
-Add the dependency:
-
-[![](https://jitpack.io/v/li-yu/AKPermission.svg)](https://jitpack.io/#li-yu/AKPermission)
-
-```
-dependencies {
-	implementation 'com.github.li-yu.AKPermission:akpermission-coroutines:1.1.1'
-}
-```
-
-Then use `callWithPermissionsResult(...)` in coroutines, for example:
+Use `callWithPermissionsResult(...)` in coroutines, for example:
 
 ```kotlin
 suspend fun downloadFile() = withContext(Dispatchers.IO) {

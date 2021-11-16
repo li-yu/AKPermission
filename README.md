@@ -22,7 +22,9 @@ Step 2. Add the dependency:
 
 ```
 dependencies {
-	implementation 'com.github.li-yu:AKPermission:1.2.2'
+	implementation 'com.github.li-yu:AKPermission:1.2.2' // both core and coroutines ext.
+	// implementation 'com.github.li-yu.AKPermission:akpermission:1.2.2' // core logic,not contains coroutines ext.
+	// implementation 'com.github.li-yu.AKPermission:akpermission-coroutines:1.2.2' // coroutines ext only.
 }
 ```
 

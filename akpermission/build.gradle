@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-group='com.github.li-yu'
+group = 'com.github.li-yu'
 
 android {
     compileSdkVersion 31

@@ -22,15 +22,15 @@ Step 2. Add the dependency:
 
 ```
 dependencies {
-	implementation 'com.github.li-yu:AKPermission:1.2.2' // both core and coroutines ext.
-	// implementation 'com.github.li-yu.AKPermission:akpermission:1.2.2' // core logic,not contains coroutines ext.
-	// implementation 'com.github.li-yu.AKPermission:akpermission-coroutines:1.2.2' // coroutines ext only.
+	implementation 'com.github.li-yu:AKPermission:1.2.3' // both core and coroutines ext.
+	// implementation 'com.github.li-yu.AKPermission:akpermission:1.2.3' // core logic,not contains coroutines ext.
+	// implementation 'com.github.li-yu.AKPermission:akpermission-coroutines:1.2.3' // coroutines ext only.
 }
 ```
 
 Step 3. Coding:
 
-You can use `callWithPermissions(...)` in **Activity**, **Fragment**, **View** and **Context**(based on AppCompatActivity) just like below:
+You can use `callWithPermissions(...)` in **Activity**, **Fragment** just like below:
 
 ```kotlin
 callWithPermissions(Manifest.permission.RECORD_AUDIO,
@@ -73,9 +73,41 @@ suspend fun downloadFile() = withContext(Dispatchers.IO) {
 }
 ```
 
+### In Java
+
+```kotlin
+AKPermission
+	.with(this)
+	.permissions(Manifest.permission.RECORD_AUDIO)
+	.call(new AKPermission.Callbacks() {
+		@Override
+		public void onDenied(List<String> list) {
+			Toast.makeText(JavaActivity.this, "onDenied", Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onGranted() {
+			Toast.makeText(JavaActivity.this, "onGranted", Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		void onShowRationale(PermissionRationale permissionRationale) {
+			new AlertDialog.Builder(JavaActivity.this)
+				.setMessage("Record Audio needs this permissions")
+				.setTitle("Hi")
+				.setPositiveButton("Ok", (dialogInterface, i) -> permissionRationale.retry())
+				.setNegativeButton("No", null)
+				.create()
+				.show();
+		}
+	});
+```
+
+
+
 ### Notes
 
-AKPermission supports **androidx** only, and requires at minimum Android 6.0(Api 23).
+AKPermission requires **AndroidX** and at minimum Android 4.0.3(**API 15**).
 
 ### License
 

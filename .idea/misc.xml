@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/SuperWork/AKPermission/app/src/main/res/layout/activity_main.xml" value="0.13677536231884058" />
+        <entry key="..\:/SuperWork/AKPermission/akpermission/src/main/res/layout/activity_java.xml" value="0.27898550724637683" />
+        <entry key="..\:/SuperWork/AKPermission/app/src/main/res/layout/activity_java.xml" value="0.2625" />
+        <entry key="..\:/SuperWork/AKPermission/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/SuperWork/AKPermission/app/src/main/res/layout/fragment_test.xml" value="0.27898550724637683" />
       </map>
     </option>
   </component>
